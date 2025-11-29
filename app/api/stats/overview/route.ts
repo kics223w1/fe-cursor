@@ -1,39 +1,59 @@
 import { NextResponse } from 'next/server';
-import { getSubmissions } from '../../submissions/route';
 
 export async function GET() {
-  const submissions = getSubmissions();
-  
-  // Calculate stats
-  const totalSubmissions = submissions.length;
-  
-  const modelCounts: Record<string, number> = {};
-  const planCounts: Record<string, number> = {};
-  const modeCounts: Record<string, number> = {};
-  const countryCounts: Record<string, number> = {};
+  // Hardcoded data as requested by user
+  const data = {
+    topModels: [
+      { name: "GPT-5.1 Codex High Fast", count: 20 },
+      { name: "Opus 4.5", count: 15 },
+      { name: "Composer 1", count: 10 }
+    ],
+    topPlans: [
+      { name: "Pro", count: 22 },
+      { name: "Ultra", count: 18 },
+      { name: "Free", count: 10 }
+    ],
+    topMode: { mode: "Agent", count: 33 },
+    topCountries: [
+      { country: "Vietnam", count: 15 },
+      { country: "USA", count: 12 },
+      { country: "Germany", count: 8 }
+    ],
+    // Detailed stats for the dashboards
+    details: {
+      modelTrends: [
+        { day: "Mon", gpt: 12, opus: 8, composer: 5 },
+        { day: "Tue", gpt: 15, opus: 10, composer: 6 },
+        { day: "Wed", gpt: 18, opus: 12, composer: 8 },
+        { day: "Thu", gpt: 20, opus: 15, composer: 10 },
+        { day: "Fri", gpt: 22, opus: 14, composer: 9 },
+        { day: "Sat", gpt: 25, opus: 18, composer: 12 },
+        { day: "Sun", gpt: 20, opus: 15, composer: 10 }
+      ],
+      planFeatures: [
+        { name: "Unlimited GPT-4", pro: 85, ultra: 100, free: 0 },
+        { name: "Agent Mode", pro: 60, ultra: 90, free: 10 },
+        { name: "Fast Apply", pro: 90, ultra: 95, free: 20 },
+        { name: "Context Window", pro: 70, ultra: 100, free: 30 }
+      ],
+      modeUsage: [
+        { time: "09:00", agent: 15, chat: 20, ctrl_k: 40 },
+        { time: "12:00", agent: 30, chat: 25, ctrl_k: 35 },
+        { time: "15:00", agent: 45, chat: 30, ctrl_k: 30 },
+        { time: "18:00", agent: 33, chat: 28, ctrl_k: 25 }
+      ],
+      allCountries: [
+        { country: "Vietnam", users: 150, growth: "+12%" },
+        { country: "USA", users: 120, growth: "+8%" },
+        { country: "Germany", users: 80, growth: "+5%" },
+        { country: "Japan", users: 65, growth: "+15%" },
+        { country: "UK", users: 60, growth: "+4%" },
+        { country: "Canada", users: 45, growth: "+6%" },
+        { country: "France", users: 40, growth: "+3%" },
+        { country: "India", users: 35, growth: "+20%" }
+      ]
+    }
+  };
 
-  submissions.forEach(sub => {
-    modelCounts[sub.favoriteModel] = (modelCounts[sub.favoriteModel] || 0) + 1;
-    planCounts[sub.cursorPlan] = (planCounts[sub.cursorPlan] || 0) + 1;
-    modeCounts[sub.favoriteMode] = (modeCounts[sub.favoriteMode] || 0) + 1;
-    countryCounts[sub.country] = (countryCounts[sub.country] || 0) + 1;
-  });
-
-  const getTop = (counts: Record<string, number>) => 
-    Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'N/A';
-
-  return NextResponse.json({
-    totalSubmissions,
-    topModel: getTop(modelCounts),
-    topPlan: getTop(planCounts),
-    topMode: getTop(modeCounts),
-    models: Object.entries(modelCounts).map(([name, count]) => ({ name, count })),
-    plans: Object.entries(planCounts).map(([name, count]) => ({ name, count })),
-    modes: Object.entries(modeCounts).map(([name, count]) => ({ name, count })),
-    countries: Object.entries(countryCounts)
-      .map(([name, count]) => ({ name, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5),
-  });
+  return NextResponse.json(data);
 }
-

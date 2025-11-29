@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import SearchBar from "./components/SearchBar";
 import Navigation from "./components/Navigation";
-import Leaderboard from "./components/Leaderboard";
+import Dashboard from "./components/Dashboard";
 
 export default function Home() {
   return (
@@ -12,9 +12,8 @@ export default function Home() {
         <main className="flex w-full flex-col items-center">
           <Hero />
           <SearchBar />
-          <Navigation />
           <div className="w-full py-8">
-            <Leaderboard />
+            <Dashboard />
           </div>
           <footer className="w-full border-t border-zinc-900 py-8 text-center">
             <p className="text-sm text-zinc-600">
