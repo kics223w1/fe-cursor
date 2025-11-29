@@ -5,70 +5,243 @@ interface UserRowProps {
   rank: number;
 }
 
-function getRankBadge(rank: number) {
-  switch (rank) {
-    case 1:
-      return <span className="text-lg">🥇</span>;
-    case 2:
-      return <span className="text-lg">🥈</span>;
-    case 3:
-      return <span className="text-lg">🥉</span>;
-    default:
-      return <span className="text-sm text-zinc-500">{rank}</span>;
-  }
+// Helper to get flag emoji from country name
+// Expanded mapping for better coverage
+function getFlagEmoji(countryName: string) {
+  if (!countryName) return "🌍";
+  
+  const flags: Record<string, string> = {
+    "Afghanistan": "🇦🇫",
+    "Albania": "🇦🇱",
+    "Algeria": "🇩🇿",
+    "Andorra": "🇦🇩",
+    "Angola": "🇦🇴",
+    "Antigua and Barbuda": "🇦🇬",
+    "Argentina": "🇦🇷",
+    "Armenia": "🇦🇲",
+    "Australia": "🇦🇺",
+    "Austria": "🇦🇹",
+    "Azerbaijan": "🇦🇿",
+    "Bahamas": "🇧🇸",
+    "Bahrain": "🇧🇭",
+    "Bangladesh": "🇧🇩",
+    "Barbados": "🇧🇧",
+    "Belarus": "🇧🇾",
+    "Belgium": "🇧🇪",
+    "Belize": "🇧🇿",
+    "Benin": "🇧🇯",
+    "Bhutan": "🇧🇹",
+    "Bolivia": "🇧🇴",
+    "Bosnia and Herzegovina": "🇧🇦",
+    "Botswana": "🇧🇼",
+    "Brazil": "🇧🇷",
+    "Brunei": "🇧🇳",
+    "Bulgaria": "🇧🇬",
+    "Burkina Faso": "🇧🇫",
+    "Burundi": "🇧🇮",
+    "Cabo Verde": "🇨🇻",
+    "Cambodia": "🇰🇭",
+    "Cameroon": "🇨🇲",
+    "Canada": "🇨🇦",
+    "Central African Republic": "🇨🇫",
+    "Chad": "🇹🇩",
+    "Chile": "🇨🇱",
+    "China": "🇨🇳",
+    "Colombia": "🇨🇴",
+    "Comoros": "🇰🇲",
+    "Congo (Congo-Brazzaville)": "🇨🇬",
+    "Costa Rica": "🇨🇷",
+    "Croatia": "🇭🇷",
+    "Cuba": "🇨🇺",
+    "Cyprus": "🇨🇾",
+    "Czechia (Czech Republic)": "🇨🇿",
+    "Denmark": "🇩🇰",
+    "Djibouti": "🇩🇯",
+    "Dominica": "🇩🇲",
+    "Dominican Republic": "🇩🇴",
+    "Ecuador": "🇪🇨",
+    "Egypt": "🇪🇬",
+    "El Salvador": "🇸🇻",
+    "Equatorial Guinea": "🇬🇶",
+    "Eritrea": "🇪🇷",
+    "Estonia": "🇪🇪",
+    "Eswatini": "🇸🇿",
+    "Ethiopia": "🇪🇹",
+    "Fiji": "🇫🇯",
+    "Finland": "🇫🇮",
+    "France": "🇫🇷",
+    "Gabon": "🇬🇦",
+    "Gambia": "🇬🇲",
+    "Georgia": "🇬🇪",
+    "Germany": "🇩🇪",
+    "Ghana": "🇬🇭",
+    "Greece": "🇬🇷",
+    "Grenada": "🇬🇩",
+    "Guatemala": "🇬🇹",
+    "Guinea": "🇬🇳",
+    "Guinea-Bissau": "🇬🇼",
+    "Guyana": "🇬🇾",
+    "Haiti": "🇭🇹",
+    "Honduras": "🇭🇳",
+    "Hungary": "🇭🇺",
+    "Iceland": "🇮🇸",
+    "India": "🇮🇳",
+    "Indonesia": "🇮🇩",
+    "Iran": "🇮🇷",
+    "Iraq": "🇮🇶",
+    "Ireland": "🇮🇪",
+    "Israel": "🇮🇱",
+    "Italy": "🇮🇹",
+    "Jamaica": "🇯🇲",
+    "Japan": "🇯🇵",
+    "Jordan": "🇯🇴",
+    "Kazakhstan": "🇰🇿",
+    "Kenya": "🇰🇪",
+    "Kiribati": "🇰🇮",
+    "Kuwait": "🇰🇼",
+    "Kyrgyzstan": "🇰🇬",
+    "Laos": "🇱🇦",
+    "Latvia": "🇱🇻",
+    "Lebanon": "🇱🇧",
+    "Lesotho": "🇱🇸",
+    "Liberia": "🇱🇷",
+    "Libya": "🇱🇾",
+    "Liechtenstein": "🇱🇮",
+    "Lithuania": "🇱🇹",
+    "Luxembourg": "🇱🇺",
+    "Madagascar": "🇲🇬",
+    "Malawi": "🇲🇼",
+    "Malaysia": "🇲🇾",
+    "Maldives": "🇲🇻",
+    "Mali": "🇲🇱",
+    "Malta": "🇲🇹",
+    "Marshall Islands": "🇲🇭",
+    "Mauritania": "🇲🇷",
+    "Mauritius": "🇲🇺",
+    "Mexico": "🇲🇽",
+    "Micronesia": "🇫🇲",
+    "Moldova": "🇲🇩",
+    "Monaco": "🇲🇨",
+    "Mongolia": "🇲🇳",
+    "Montenegro": "🇲🇪",
+    "Morocco": "🇲🇦",
+    "Mozambique": "🇲🇿",
+    "Myanmar (formerly Burma)": "🇲🇲",
+    "Namibia": "🇳🇦",
+    "Nauru": "🇳🇷",
+    "Nepal": "🇳🇵",
+    "Netherlands": "🇳🇱",
+    "New Zealand": "🇳🇿",
+    "Nicaragua": "🇳🇮",
+    "Niger": "🇳🇪",
+    "Nigeria": "🇳🇬",
+    "North Korea": "🇰🇵",
+    "North Macedonia": "🇲🇰",
+    "Norway": "🇳🇴",
+    "Oman": "🇴🇲",
+    "Pakistan": "🇵🇰",
+    "Palau": "🇵🇼",
+    "Palestine State": "🇵🇸",
+    "Panama": "🇵🇦",
+    "Papua New Guinea": "🇵🇬",
+    "Paraguay": "🇵🇾",
+    "Peru": "🇵🇪",
+    "Philippines": "🇵🇭",
+    "Poland": "🇵🇱",
+    "Portugal": "🇵🇹",
+    "Qatar": "🇶🇦",
+    "Romania": "🇷🇴",
+    "Russia": "🇷🇺",
+    "Rwanda": "🇷🇼",
+    "Saint Kitts and Nevis": "🇰🇳",
+    "Saint Lucia": "🇱🇨",
+    "Saint Vincent and the Grenadines": "🇻🇨",
+    "Samoa": "🇼🇸",
+    "San Marino": "🇸🇲",
+    "Sao Tome and Principe": "🇸🇹",
+    "Saudi Arabia": "🇸🇦",
+    "Senegal": "🇸🇳",
+    "Serbia": "🇷🇸",
+    "Seychelles": "🇸🇨",
+    "Sierra Leone": "🇸🇱",
+    "Singapore": "🇸🇬",
+    "Slovakia": "🇸🇰",
+    "Slovenia": "🇸🇮",
+    "Solomon Islands": "🇸🇧",
+    "Somalia": "🇸🇴",
+    "South Africa": "🇿🇦",
+    "South Korea": "🇰🇷",
+    "South Sudan": "🇸🇸",
+    "Spain": "🇪🇸",
+    "Sri Lanka": "🇱🇰",
+    "Sudan": "🇸🇩",
+    "Suriname": "🇸🇷",
+    "Sweden": "🇸🇪",
+    "Switzerland": "🇨🇭",
+    "Syria": "🇸🇾",
+    "Taiwan": "🇹🇼",
+    "Tajikistan": "🇹🇯",
+    "Tanzania": "🇹🇿",
+    "Thailand": "🇹🇭",
+    "Timor-Leste": "🇹🇱",
+    "Togo": "🇹🇬",
+    "Tonga": "🇹🇴",
+    "Trinidad and Tobago": "🇹🇹",
+    "Tunisia": "🇹🇳",
+    "Turkey": "🇹🇷",
+    "Turkmenistan": "🇹🇲",
+    "Tuvalu": "🇹🇻",
+    "Uganda": "🇺🇬",
+    "Ukraine": "🇺🇦",
+    "United Arab Emirates": "🇦🇪",
+    "United Kingdom": "🇬🇧", "UK": "🇬🇧",
+    "United States": "🇺🇸", "USA": "🇺🇸",
+    "Uruguay": "🇺🇾",
+    "Uzbekistan": "🇺🇿",
+    "Vanuatu": "🇻🇺",
+    "Vatican City": "🇻🇦",
+    "Venezuela": "🇻🇪",
+    "Vietnam": "🇻🇳",
+    "Yemen": "🇾🇪",
+    "Zambia": "🇿🇲",
+    "Zimbabwe": "🇿🇼",
+    "Other": "🌍"
+  };
+
+  return flags[countryName] || "🌍";
 }
 
-export default function UserRow({ submission, rank }: UserRowProps) {
+export default function UserRow({ submission }: UserRowProps) {
+  const flag = getFlagEmoji(submission.country);
+
   return (
     <tr className="border-b border-zinc-800/50 transition-colors hover:bg-zinc-800/30">
-      <td className="py-4 pl-4 text-center">{getRankBadge(rank)}</td>
+      {/* Country */}
+      <td className="py-4 pl-4">
+        <div className="flex items-center gap-2" title={submission.country}>
+          <span className="text-lg">{flag}</span>
+          <span className="text-sm text-zinc-400 hidden sm:inline-block">{submission.country}</span>
+        </div>
+      </td>
       
-      {/* User Info */}
+      {/* User Info - Name Only */}
       <td className="py-4">
-        <div className="flex items-center gap-3">
-          <div
-            className="flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold uppercase"
-            style={{
-              backgroundColor:
-                rank === 1
-                  ? "#fbbf24"
-                  : rank === 2
-                  ? "#94a3b8"
-                  : rank === 3
-                  ? "#d97706"
-                  : "#3b82f6",
-              color: rank <= 3 ? "#000" : "#fff",
-            }}
-          >
-            {submission.avatar || submission.displayName?.[0] || "?"}
-          </div>
-          <div>
-            <div className="font-medium text-white">
-              {submission.displayName || "Anonymous"}
-            </div>
-            <div className="text-xs text-zinc-500">
-              {new Date(submission.createdAt).toLocaleDateString()}
-            </div>
-          </div>
+        <div className="font-medium text-white">
+          {submission.displayName || "Anonymous"}
         </div>
       </td>
 
       {/* Favorite Model */}
       <td className="py-4">
-        <span className="inline-flex items-center rounded-md bg-zinc-800 px-2 py-1 text-xs font-medium text-cyan-300 ring-1 ring-inset ring-cyan-400/20">
+        <span className="inline-flex items-center rounded-md bg-zinc-800 px-2.5 py-1 text-xs font-medium text-cyan-300 ring-1 ring-inset ring-cyan-400/20">
           {submission.favoriteModel}
         </span>
-      </td>
-
-      {/* Plan */}
-      <td className="py-4">
-        <span className="text-sm text-zinc-300">{submission.cursorPlan}</span>
       </td>
 
       {/* Mode */}
       <td className="py-4">
         <span
-          className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+          className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${
             submission.favoriteMode === "Plan"
               ? "bg-purple-400/10 text-purple-400 ring-purple-400/30"
               : submission.favoriteMode === "Agent"
@@ -80,9 +253,11 @@ export default function UserRow({ submission, rank }: UserRowProps) {
         </span>
       </td>
 
-      {/* Country */}
-      <td className="py-4 pr-4 text-right">
-        <span className="text-sm text-zinc-400">{submission.country}</span>
+      {/* Plan */}
+      <td className="py-4">
+        <span className="inline-flex items-center rounded-md bg-zinc-800 px-2.5 py-1 text-xs font-medium text-zinc-300 ring-1 ring-inset ring-zinc-700">
+          {submission.cursorPlan}
+        </span>
       </td>
     </tr>
   );

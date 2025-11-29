@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Card } from './ui/Card';
+import Leaderboard from './Leaderboard';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -415,48 +416,6 @@ export default function Dashboard() {
             </div>
           </Card>
 
-          {/* Plan Feature Usage */}
-          <Card className="border-zinc-800 bg-zinc-900/40">
-            <div className="mb-6">
-              <h3 className="text-sm font-medium text-zinc-400">Feature Usage by Plan (%)</h3>
-            </div>
-            <div className="h-[300px] w-full min-w-0">
-              <Bar 
-                data={planFeaturesData} 
-                options={{
-                  ...chartOptions,
-                  indexAxis: 'y' as const,
-                }} 
-              />
-            </div>
-          </Card>
-
-          {/* Mode Usage Time */}
-          <Card className="border-zinc-800 bg-zinc-900/40">
-            <div className="mb-6">
-              <h3 className="text-sm font-medium text-zinc-400">Daily Activity Heatmap (Count)</h3>
-            </div>
-            <div className="h-[300px] w-full min-w-0">
-              <Bar 
-                data={modeUsageData} 
-                options={{
-                  ...chartOptions,
-                  scales: {
-                    ...chartOptions.scales,
-                    x: {
-                      ...chartOptions.scales.x,
-                      stacked: true,
-                    },
-                    y: {
-                      ...chartOptions.scales.y,
-                      stacked: true,
-                    },
-                  },
-                }} 
-              />
-            </div>
-          </Card>
-
           {/* Global Distribution */}
           <Card className="border-zinc-800 bg-zinc-900/40">
             <div className="mb-6">
@@ -489,6 +448,9 @@ export default function Dashboard() {
           </Card>
         </div>
       </div>
+
+      {/* Submissions Table */}
+      <Leaderboard />
     </div>
   );
 }

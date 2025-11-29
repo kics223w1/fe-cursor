@@ -69,24 +69,23 @@ export default function Leaderboard() {
         <table className="w-full">
           <thead>
             <tr className="border-b border-zinc-800 text-xs uppercase tracking-wider text-zinc-500">
-              <th className="py-3 pl-4 text-center font-medium w-12">#</th>
+              <th className="py-3 pl-4 text-left font-medium w-[200px]">Country</th>
               <th className="py-3 text-left font-medium">User</th>
               <th className="py-3 text-left font-medium">Model</th>
-              <th className="py-3 text-left font-medium">Plan</th>
               <th className="py-3 text-left font-medium">Mode</th>
-              <th className="py-3 pr-4 text-right font-medium">Country</th>
+              <th className="py-3 text-left font-medium">Plan</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800/50">
             {loading ? (
               <tr>
-                <td colSpan={6} className="py-12 text-center text-zinc-500">
+                <td colSpan={5} className="py-12 text-center text-zinc-500">
                   <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-cyan-500 border-t-transparent" />
                 </td>
               </tr>
             ) : submissions.length === 0 ? (
               <tr>
-                <td colSpan={6} className="py-12 text-center text-zinc-500">
+                <td colSpan={5} className="py-12 text-center text-zinc-500">
                   No submissions yet. Be the first to share!
                 </td>
               </tr>
