@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback, useMemo } from "react";
-import UserRow from "./UserRow";
 import { Submission } from "../types";
 import { useCachedFetch, useCache } from "../lib/cache";
 
@@ -13,6 +12,126 @@ interface LeaderboardResponse {
     totalCount: number;
     totalPages: number;
   };
+}
+
+// Helper to get flag emoji from country name
+function getFlagEmoji(countryName: string) {
+  if (!countryName) return "🌍";
+  
+  const flags: Record<string, string> = {
+    "United States": "🇺🇸", "USA": "🇺🇸",
+    "United Kingdom": "🇬🇧", "UK": "🇬🇧",
+    "France": "🇫🇷",
+    "Germany": "🇩🇪",
+    "Japan": "🇯🇵",
+    "China": "🇨🇳",
+    "India": "🇮🇳",
+    "Brazil": "🇧🇷",
+    "Canada": "🇨🇦",
+    "Australia": "🇦🇺",
+    "Spain": "🇪🇸",
+    "Italy": "🇮🇹",
+    "Netherlands": "🇳🇱",
+    "Sweden": "🇸🇪",
+    "Switzerland": "🇨🇭",
+    "Singapore": "🇸🇬",
+    "South Korea": "🇰🇷",
+    "Russia": "🇷🇺",
+    "Poland": "🇵🇱",
+    "Ukraine": "🇺🇦",
+    "Vietnam": "🇻🇳",
+    "Indonesia": "🇮🇩",
+    "Mexico": "🇲🇽",
+    "Argentina": "🇦🇷",
+    "Israel": "🇮🇱",
+    "Other": "🌍"
+  };
+
+  return flags[countryName] || "🌍";
+}
+
+// Mobile card component for each submission
+function SubmissionCard({ submission }: { submission: Submission }) {
+  const flag = getFlagEmoji(submission.country);
+  
+  return (
+    <div className="border-b border-zinc-800/50 p-4 transition-colors hover:bg-zinc-800/30">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="text-xl flex-shrink-0">{flag}</span>
+          <div className="min-w-0">
+            <div className="font-medium text-white truncate">
+              {submission.displayName || "Anonymous"}
+            </div>
+            <div className="text-xs text-zinc-500 truncate">{submission.country}</div>
+          </div>
+        </div>
+        <span
+          className={`flex-shrink-0 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+            submission.favoriteMode === "Plan"
+              ? "bg-purple-400/10 text-purple-400 ring-purple-400/30"
+              : submission.favoriteMode === "Agent"
+              ? "bg-emerald-400/10 text-emerald-400 ring-emerald-400/30"
+              : "bg-blue-400/10 text-blue-400 ring-blue-400/30"
+          } ring-1 ring-inset`}
+        >
+          {submission.favoriteMode}
+        </span>
+      </div>
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <span className="inline-flex items-center rounded-md bg-zinc-800 px-2 py-0.5 text-xs font-medium text-cyan-300 ring-1 ring-inset ring-cyan-400/20">
+          {submission.favoriteModel}
+        </span>
+        <span className="inline-flex items-center rounded-md bg-zinc-800 px-2 py-0.5 text-xs font-medium text-zinc-300 ring-1 ring-inset ring-zinc-700">
+          {submission.cursorPlan}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// Desktop table row component
+function DesktopRow({ submission }: { submission: Submission }) {
+  const flag = getFlagEmoji(submission.country);
+
+  return (
+    <tr className="border-b border-zinc-800/50 transition-colors hover:bg-zinc-800/30">
+      <td className="py-4 pl-4 pr-2">
+        <div className="flex items-center gap-2" title={submission.country}>
+          <span className="text-lg">{flag}</span>
+          <span className="text-sm text-zinc-400">{submission.country}</span>
+        </div>
+      </td>
+      <td className="py-4 px-2">
+        <div className="font-medium text-white">
+          {submission.displayName || "Anonymous"}
+        </div>
+      </td>
+      <td className="py-4 px-2">
+        <span className="inline-flex items-center rounded-md bg-zinc-800 px-2.5 py-1 text-xs font-medium text-cyan-300 ring-1 ring-inset ring-cyan-400/20">
+          {submission.favoriteModel}
+        </span>
+      </td>
+      <td className="py-4 px-2">
+        <span
+          className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${
+            submission.favoriteMode === "Plan"
+              ? "bg-purple-400/10 text-purple-400 ring-purple-400/30"
+              : submission.favoriteMode === "Agent"
+              ? "bg-emerald-400/10 text-emerald-400 ring-emerald-400/30"
+              : "bg-blue-400/10 text-blue-400 ring-blue-400/30"
+          } ring-1 ring-inset`}
+        >
+          {submission.favoriteMode}
+        </span>
+      </td>
+      <td className="py-4 pl-2 pr-4">
+        <span className="inline-flex items-center rounded-md bg-zinc-800 px-2.5 py-1 text-xs font-medium text-zinc-300 ring-1 ring-inset ring-zinc-700">
+          {submission.cursorPlan}
+        </span>
+      </td>
+    </tr>
+  );
 }
 
 export default function Leaderboard() {
@@ -47,7 +166,7 @@ export default function Leaderboard() {
 
   const handleSortChange = (newSort: string) => {
     setSortBy(newSort);
-    setPage(1); // Reset to page 1 when sorting changes
+    setPage(1);
   };
 
   return (
@@ -64,7 +183,6 @@ export default function Leaderboard() {
               <option value="createdAtDesc">Newest First</option>
               <option value="createdAtAsc">Oldest First</option>
             </select>
-            {/* Chevron Icon */}
             <svg
               className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400"
               fill="none"
@@ -77,15 +195,37 @@ export default function Leaderboard() {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      {/* Mobile view - Card layout */}
+      <div className="md:hidden">
+        {loading ? (
+          <div className="py-12 text-center text-zinc-500">
+            <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-cyan-500 border-t-transparent" />
+          </div>
+        ) : error ? (
+          <div className="py-12 text-center text-zinc-500">
+            Failed to load submissions
+          </div>
+        ) : submissions.length === 0 ? (
+          <div className="py-12 text-center text-zinc-500">
+            No submissions yet. Be the first to share!
+          </div>
+        ) : (
+          submissions.map((submission) => (
+            <SubmissionCard key={submission.id} submission={submission} />
+          ))
+        )}
+      </div>
+
+      {/* Desktop view - Table layout */}
+      <div className="hidden md:block">
         <table className="w-full">
           <thead>
             <tr className="border-b border-zinc-800 text-xs uppercase tracking-wider text-zinc-500">
-              <th className="py-3 pl-4 text-left font-medium w-[200px]">Country</th>
-              <th className="py-3 text-left font-medium">User</th>
-              <th className="py-3 text-left font-medium">Model</th>
-              <th className="py-3 text-left font-medium">Mode</th>
-              <th className="py-3 text-left font-medium">Plan</th>
+              <th className="py-3 pl-4 pr-2 text-left font-medium">Country</th>
+              <th className="py-3 px-2 text-left font-medium">User</th>
+              <th className="py-3 px-2 text-left font-medium">Model</th>
+              <th className="py-3 px-2 text-left font-medium">Mode</th>
+              <th className="py-3 pl-2 pr-4 text-left font-medium">Plan</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800/50">
@@ -108,12 +248,8 @@ export default function Leaderboard() {
                 </td>
               </tr>
             ) : (
-              submissions.map((submission, index) => (
-                <UserRow 
-                  key={submission.id} 
-                  submission={submission} 
-                  rank={(page - 1) * 20 + index + 1} 
-                />
+              submissions.map((submission) => (
+                <DesktopRow key={submission.id} submission={submission} />
               ))
             )}
           </tbody>

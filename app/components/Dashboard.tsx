@@ -231,32 +231,32 @@ export default function Dashboard() {
   return (
     <div className="w-full space-y-8">
       {/* Top Level Stats */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {/* Top Cursor Mode - Primary (Cyan) */}
-        <Card className="relative overflow-hidden border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-900/80 to-cyan-950/30 lg:col-span-1 group hover:border-cyan-500/30 transition-all duration-300">
-          <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-cyan-500/10 blur-3xl group-hover:bg-cyan-500/20 transition-colors" />
+        <Card className="relative overflow-hidden border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-900/80 to-cyan-950/30 group hover:border-cyan-500/30 transition-all duration-300 p-4 sm:p-6">
+          <div className="absolute -right-8 -top-8 h-32 sm:h-40 w-32 sm:w-40 rounded-full bg-cyan-500/10 blur-3xl group-hover:bg-cyan-500/20 transition-colors" />
           
           <div className="relative z-10">
-            <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div className="mb-3 sm:mb-4 flex items-center gap-2">
+              <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
                 </svg>
               </div>
-              <h3 className="text-sm font-medium text-zinc-400">Top Cursor Mode</h3>
+              <h3 className="text-xs sm:text-sm font-medium text-zinc-400">Top Cursor Mode</h3>
             </div>
 
-            <div className="mt-6">
-              <div className="text-4xl font-bold text-white tracking-tight">
+            <div className="mt-4 sm:mt-6">
+              <div className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
                 {topMode?.mode || 'N/A'}
               </div>
-              <div className="mt-2 text-sm text-zinc-500">
+              <div className="mt-1 sm:mt-2 text-xs sm:text-sm text-zinc-500">
                 Most popular workflow
               </div>
             </div>
 
             {topMode && (
-              <div className="mt-8">
+              <div className="mt-5 sm:mt-8">
                 <div className="flex items-center justify-between text-xs text-zinc-400 mb-2">
                   <span>Usage count</span>
                   <span className="text-cyan-400">{topMode.count}</span>
@@ -270,32 +270,32 @@ export default function Dashboard() {
         </Card>
 
         {/* Top 3 AI Models - Secondary (Blue) */}
-        <Card className="relative overflow-hidden border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-900/80 to-blue-950/30 lg:col-span-1 group hover:border-blue-500/30 transition-all duration-300">
-          <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-blue-500/10 blur-3xl group-hover:bg-blue-500/20 transition-colors" />
+        <Card className="relative overflow-hidden border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-900/80 to-blue-950/30 group hover:border-blue-500/30 transition-all duration-300 p-4 sm:p-6">
+          <div className="absolute -right-8 -top-8 h-32 sm:h-40 w-32 sm:w-40 rounded-full bg-blue-500/10 blur-3xl group-hover:bg-blue-500/20 transition-colors" />
           
           <div className="relative z-10">
-            <div className="mb-6 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div className="mb-4 sm:mb-6 flex items-center gap-2">
+              <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 2a10 10 0 1 0 10 10H12V2z"/>
                   <path d="M12 2a10 10 0 0 1 10 10"/>
                   <path d="M12 12L2.1 12"/>
                 </svg>
               </div>
-              <h3 className="text-sm font-medium text-zinc-400">Top 3 AI Models</h3>
+              <h3 className="text-xs sm:text-sm font-medium text-zinc-400">Top 3 AI Models</h3>
             </div>
             
-            <div className="space-y-5">
+            <div className="space-y-4 sm:space-y-5">
               {topModels.map((model, idx) => (
                 <div key={model.name} className="group/item relative">
-                  <div className="flex items-center justify-between text-sm mb-2">
-                    <span className="flex items-center gap-3 text-zinc-200 font-medium">
+                  <div className="flex items-center justify-between text-xs sm:text-sm mb-2">
+                    <span className="flex items-center gap-2 sm:gap-3 text-zinc-200 font-medium">
                       <span className="flex h-5 w-5 items-center justify-center rounded bg-zinc-800/50 text-[10px] text-zinc-500 font-mono border border-zinc-700/50 group-hover/item:border-blue-500/50 group-hover/item:text-blue-400 group-hover/item:bg-blue-500/10 transition-colors">
                         0{idx + 1}
                       </span>
-                      {model.name}
+                      <span className="truncate">{model.name}</span>
                     </span>
-                    <span className="text-zinc-500 font-mono">{model.count}</span>
+                    <span className="text-zinc-500 font-mono flex-shrink-0 ml-2">{model.count}</span>
                   </div>
                   <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-800/50">
                     <div
@@ -312,31 +312,31 @@ export default function Dashboard() {
         </Card>
 
         {/* Top 3 Plans - Primary (Cyan) */}
-        <Card className="relative overflow-hidden border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-900/80 to-cyan-950/30 lg:col-span-1 group hover:border-cyan-500/30 transition-all duration-300">
-          <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-cyan-500/10 blur-3xl group-hover:bg-cyan-500/20 transition-colors" />
+        <Card className="relative overflow-hidden border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-900/80 to-cyan-950/30 group hover:border-cyan-500/30 transition-all duration-300 p-4 sm:p-6">
+          <div className="absolute -right-8 -top-8 h-32 sm:h-40 w-32 sm:w-40 rounded-full bg-cyan-500/10 blur-3xl group-hover:bg-cyan-500/20 transition-colors" />
 
           <div className="relative z-10">
-            <div className="mb-6 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div className="mb-4 sm:mb-6 flex items-center gap-2">
+              <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="5" width="20" height="14" rx="2" />
                   <line x1="2" y1="10" x2="22" y2="10" />
                 </svg>
               </div>
-              <h3 className="text-sm font-medium text-zinc-400">Top 3 Plans</h3>
+              <h3 className="text-xs sm:text-sm font-medium text-zinc-400">Top 3 Plans</h3>
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-4 sm:space-y-5">
               {topPlans.map((plan, idx) => (
                 <div key={plan.name} className="group/item relative">
-                  <div className="flex items-center justify-between text-sm mb-2">
-                    <span className="flex items-center gap-3 text-zinc-200 font-medium">
+                  <div className="flex items-center justify-between text-xs sm:text-sm mb-2">
+                    <span className="flex items-center gap-2 sm:gap-3 text-zinc-200 font-medium">
                       <span className="flex h-5 w-5 items-center justify-center rounded bg-zinc-800/50 text-[10px] text-zinc-500 font-mono border border-zinc-700/50 group-hover/item:border-cyan-500/50 group-hover/item:text-cyan-400 group-hover/item:bg-cyan-500/10 transition-colors">
                         0{idx + 1}
                       </span>
-                      {plan.name}
+                      <span className="truncate">{plan.name}</span>
                     </span>
-                    <span className="text-zinc-500 font-mono">{plan.count}</span>
+                    <span className="text-zinc-500 font-mono flex-shrink-0 ml-2">{plan.count}</span>
                   </div>
                   <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-800/50">
                     <div
@@ -353,32 +353,32 @@ export default function Dashboard() {
         </Card>
 
         {/* Top 3 Countries - Secondary (Blue) */}
-        <Card className="relative overflow-hidden border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-900/80 to-blue-950/30 lg:col-span-1 group hover:border-blue-500/30 transition-all duration-300">
-          <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-blue-500/10 blur-3xl group-hover:bg-blue-500/20 transition-colors" />
+        <Card className="relative overflow-hidden border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-900/80 to-blue-950/30 group hover:border-blue-500/30 transition-all duration-300 p-4 sm:p-6">
+          <div className="absolute -right-8 -top-8 h-32 sm:h-40 w-32 sm:w-40 rounded-full bg-blue-500/10 blur-3xl group-hover:bg-blue-500/20 transition-colors" />
 
           <div className="relative z-10">
-            <div className="mb-6 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div className="mb-4 sm:mb-6 flex items-center gap-2">
+              <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <line x1="2" y1="12" x2="22" y2="12" />
                   <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z" />
                 </svg>
               </div>
-              <h3 className="text-sm font-medium text-zinc-400">Top 3 Countries</h3>
+              <h3 className="text-xs sm:text-sm font-medium text-zinc-400">Top 3 Countries</h3>
             </div>
           
-            <div className="space-y-5">
+            <div className="space-y-4 sm:space-y-5">
               {topCountries.map((country, idx) => (
                 <div key={country.country} className="group/item relative">
-                  <div className="flex items-center justify-between text-sm mb-2">
-                    <span className="flex items-center gap-3 text-zinc-200 font-medium">
+                  <div className="flex items-center justify-between text-xs sm:text-sm mb-2">
+                    <span className="flex items-center gap-2 sm:gap-3 text-zinc-200 font-medium">
                       <span className="flex h-5 w-5 items-center justify-center rounded bg-zinc-800/50 text-[10px] text-zinc-500 font-mono border border-zinc-700/50 group-hover/item:border-blue-500/50 group-hover/item:text-blue-400 group-hover/item:bg-blue-500/10 transition-colors">
                         0{idx + 1}
                       </span>
-                      {country.country}
+                      <span className="truncate">{country.country}</span>
                     </span>
-                    <span className="text-zinc-500 font-mono">{country.count}</span>
+                    <span className="text-zinc-500 font-mono flex-shrink-0 ml-2">{country.count}</span>
                   </div>
                   <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-800/50">
                     <div
@@ -397,40 +397,40 @@ export default function Dashboard() {
 
       {/* Detailed Dashboards */}
       <div>
-        <h2 className="mb-6 text-xl font-bold text-white">Detailed Analytics</h2>
-        <div className="grid gap-6 md:grid-cols-2">
+        <h2 className="mb-4 sm:mb-6 text-lg sm:text-xl font-bold text-white">Detailed Analytics</h2>
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
           {/* Model Trends */}
-          <Card className="border-zinc-800 bg-zinc-900/40">
-            <div className="mb-6">
-              <h3 className="text-sm font-medium text-zinc-400">Model Popularity Trends (Last 7 Days)</h3>
+          <Card className="border-zinc-800 bg-zinc-900/40 p-4 sm:p-6">
+            <div className="mb-4 sm:mb-6">
+              <h3 className="text-xs sm:text-sm font-medium text-zinc-400">Model Popularity Trends (Last 7 Days)</h3>
             </div>
-            <div className="h-[300px] w-full min-w-0">
+            <div className="h-[250px] sm:h-[300px] w-full min-w-0">
               <Line data={modelTrendsData} options={chartOptions} />
             </div>
           </Card>
 
           {/* Global Distribution */}
-          <Card className="border-zinc-800 bg-zinc-900/40">
-            <div className="mb-6">
-              <h3 className="text-sm font-medium text-zinc-400">User Distribution by Country</h3>
+          <Card className="border-zinc-800 bg-zinc-900/40 p-4 sm:p-6">
+            <div className="mb-4 sm:mb-6">
+              <h3 className="text-xs sm:text-sm font-medium text-zinc-400">User Distribution by Country</h3>
             </div>
-            <div className="flex h-[300px] w-full items-center justify-center min-w-0">
+            <div className="flex h-[250px] sm:h-[300px] w-full items-center justify-center min-w-0">
               <div className="relative h-full w-full">
                 <Doughnut 
                   data={countryData} 
                   options={{
                     ...chartOptions,
                     maintainAspectRatio: false,
-                    cutout: '70%',
+                    cutout: '65%',
                     plugins: {
                       ...chartOptions.plugins,
                       legend: {
-                        position: 'bottom' as const, // Moved to bottom for better mobile view
+                        position: 'bottom' as const,
                         labels: {
                           color: '#a1a1aa',
-                          boxWidth: 10,
-                          padding: 15,
-                          font: { size: 11 }
+                          boxWidth: 8,
+                          padding: 10,
+                          font: { size: 10 }
                         }
                       }
                     }
