@@ -1,7 +1,7 @@
-import { User } from "../data/mockData";
+import { Submission } from "../data/mockData";
 
 interface UserRowProps {
-  user: User;
+  submission: Submission;
   rank: number;
 }
 
@@ -18,21 +18,16 @@ function getRankBadge(rank: number) {
   }
 }
 
-function formatLikes(likes: number): string {
-  if (likes >= 1000) {
-    return `${(likes / 1000).toFixed(1)}k`;
-  }
-  return likes.toLocaleString();
-}
-
-export default function UserRow({ user, rank }: UserRowProps) {
+export default function UserRow({ submission, rank }: UserRowProps) {
   return (
     <tr className="border-b border-zinc-800/50 transition-colors hover:bg-zinc-800/30">
       <td className="py-4 pl-4 text-center">{getRankBadge(rank)}</td>
+      
+      {/* User Info */}
       <td className="py-4">
         <div className="flex items-center gap-3">
           <div
-            className="flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold"
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold uppercase"
             style={{
               backgroundColor:
                 rank === 1
@@ -45,40 +40,50 @@ export default function UserRow({ user, rank }: UserRowProps) {
               color: rank <= 3 ? "#000" : "#fff",
             }}
           >
-            {user.avatar}
+            {submission.avatar || submission.displayName?.[0] || "?"}
           </div>
           <div>
-            <div className="font-medium text-white">{user.topTip}</div>
-            <div className="text-xs text-zinc-500">{user.tipDescription}</div>
+            <div className="font-medium text-white">
+              {submission.displayName || "Anonymous"}
+            </div>
+            <div className="text-xs text-zinc-500">
+              {new Date(submission.createdAt).toLocaleDateString()}
+            </div>
           </div>
         </div>
       </td>
+
+      {/* Favorite Model */}
       <td className="py-4">
-        <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-zinc-700 text-xs font-medium text-zinc-300">
-            {user.avatar}
-          </div>
-          <span className="text-sm text-zinc-400">{user.username}</span>
-        </div>
-      </td>
-      <td className="py-4 text-right">
-        <span className="font-mono text-white">
-          {formatLikes(user.likes)}
+        <span className="inline-flex items-center rounded-md bg-zinc-800 px-2 py-1 text-xs font-medium text-cyan-300 ring-1 ring-inset ring-cyan-400/20">
+          {submission.favoriteModel}
         </span>
-        <span className="ml-1 text-zinc-500">♥</span>
       </td>
+
+      {/* Plan */}
+      <td className="py-4">
+        <span className="text-sm text-zinc-300">{submission.cursorPlan}</span>
+      </td>
+
+      {/* Mode */}
+      <td className="py-4">
+        <span
+          className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+            submission.favoriteMode === "Plan"
+              ? "bg-purple-400/10 text-purple-400 ring-purple-400/30"
+              : submission.favoriteMode === "Agent"
+              ? "bg-emerald-400/10 text-emerald-400 ring-emerald-400/30"
+              : "bg-blue-400/10 text-blue-400 ring-blue-400/30"
+          } ring-1 ring-inset`}
+        >
+          {submission.favoriteMode}
+        </span>
+      </td>
+
+      {/* Country */}
       <td className="py-4 pr-4 text-right">
-        {user.growth === null ? (
-          <span className="text-zinc-600">—</span>
-        ) : user.growth > 0 ? (
-          <span className="text-emerald-400">↑ {user.growth}%</span>
-        ) : user.growth < 0 ? (
-          <span className="text-red-400">↓ {Math.abs(user.growth)}%</span>
-        ) : (
-          <span className="text-zinc-500">0%</span>
-        )}
+        <span className="text-sm text-zinc-400">{submission.country}</span>
       </td>
     </tr>
   );
 }
-

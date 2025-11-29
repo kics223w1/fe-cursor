@@ -1,12 +1,13 @@
-export interface User {
+export interface Submission {
   id: string;
-  username: string;
-  avatar: string;
-  bio: string;
-  likes: number;
-  growth: number | null;
-  topTip: string;
-  tipDescription: string;
+  createdAt: string;
+  favoriteModel: string;
+  cursorPlan: string;
+  country: string;
+  favoriteMode: string;
+  displayName: string | null;
+  note: string | null;
+  avatar?: string; // Keeping for UI visual
 }
 
 export interface FeaturedTip {
@@ -17,86 +18,94 @@ export interface FeaturedTip {
   color: string;
 }
 
-export const leaderboardUsers: User[] = [
+export const leaderboardData: Submission[] = [
   {
     id: "1",
-    username: "@sarah_dev",
+    createdAt: "2025-11-29T10:00:00Z",
+    displayName: "@sarah_dev",
     avatar: "S",
-    bio: "Full-stack developer",
-    likes: 12847,
-    growth: null,
-    topTip: "Multi-file Editing",
-    tipDescription: "Use Cmd+K to edit multiple files at once",
+    favoriteModel: "GPT-5.1 Codex High Fast",
+    cursorPlan: "Ultra",
+    country: "USA",
+    favoriteMode: "Plan",
+    note: "Using Plan mode for 90% of my work now.",
   },
   {
     id: "2",
-    username: "@code_ninja",
+    createdAt: "2025-11-28T15:30:00Z",
+    displayName: "@code_ninja",
     avatar: "C",
-    bio: "Open source contributor",
-    likes: 8932,
-    growth: 12,
-    topTip: "Custom Rules",
-    tipDescription: "Create .cursorrules for project context",
+    favoriteModel: "Claude 3.5 Sonnet",
+    cursorPlan: "Pro",
+    country: "Japan",
+    favoriteMode: "Agent",
+    note: null,
   },
   {
     id: "3",
-    username: "@devops_mike",
+    createdAt: "2025-11-28T09:15:00Z",
+    displayName: "@devops_mike",
     avatar: "M",
-    bio: "DevOps engineer",
-    likes: 7654,
-    growth: 8,
-    topTip: "Terminal Integration",
-    tipDescription: "Let AI run and debug terminal commands",
+    favoriteModel: "GPT-4o",
+    cursorPlan: "Business",
+    country: "UK",
+    favoriteMode: "Ask",
+    note: "Great for debugging k8s configs.",
   },
   {
     id: "4",
-    username: "@react_queen",
+    createdAt: "2025-11-27T14:20:00Z",
+    displayName: "@react_queen",
     avatar: "R",
-    bio: "React specialist",
-    likes: 6123,
-    growth: 15,
-    topTip: "Component Generation",
-    tipDescription: "Generate full components with one prompt",
+    favoriteModel: "GPT-5.1",
+    cursorPlan: "Pro",
+    country: "Canada",
+    favoriteMode: "Plan",
+    note: "Generating components is so fast.",
   },
   {
     id: "5",
-    username: "@backend_bob",
+    createdAt: "2025-11-27T11:00:00Z",
+    displayName: "@backend_bob",
     avatar: "B",
-    bio: "API architect",
-    likes: 5890,
-    growth: -3,
-    topTip: "API Documentation",
-    tipDescription: "Auto-generate OpenAPI specs from code",
+    favoriteModel: "Opus 4.5",
+    cursorPlan: "Team",
+    country: "Germany",
+    favoriteMode: "Agent",
+    note: null,
   },
   {
     id: "6",
-    username: "@ml_maya",
+    createdAt: "2025-11-26T16:45:00Z",
+    displayName: "@ml_maya",
     avatar: "Y",
-    bio: "ML engineer",
-    likes: 4567,
-    growth: 22,
-    topTip: "Code Explanation",
-    tipDescription: "Use Chat to understand complex algorithms",
+    favoriteModel: "Gemini 3 Pro",
+    cursorPlan: "Ultra",
+    country: "France",
+    favoriteMode: "Ask",
+    note: "Explaining complex transformers code.",
   },
   {
     id: "7",
-    username: "@startup_steve",
+    createdAt: "2025-11-26T09:30:00Z",
+    displayName: "@startup_steve",
     avatar: "T",
-    bio: "Founder & CTO",
-    likes: 3890,
-    growth: 5,
-    topTip: "Rapid Prototyping",
-    tipDescription: "Build MVPs in hours, not days",
+    favoriteModel: "GPT-5.1 Codex High Fast",
+    cursorPlan: "Business",
+    country: "Vietnam",
+    favoriteMode: "Plan",
+    note: "MVP shipped in 2 days.",
   },
   {
     id: "8",
-    username: "@ui_uma",
+    createdAt: "2025-11-25T13:15:00Z",
+    displayName: "@ui_uma",
     avatar: "U",
-    bio: "UI/UX designer who codes",
-    likes: 3245,
-    growth: 18,
-    topTip: "CSS Generation",
-    tipDescription: "Describe layouts, get pixel-perfect CSS",
+    favoriteModel: "Sonnet 4.5",
+    cursorPlan: "Pro",
+    country: "India",
+    favoriteMode: "Plan",
+    note: "Tailwind generation is on point.",
   },
 ];
 
@@ -186,7 +195,6 @@ export const navItems = [
 ];
 
 export const filterOptions = {
-  sortBy: ["Likes", "Growth", "Recent"],
+  sortBy: ["Recent", "Model", "Mode", "Country"],
   timeRange: ["All time", "This week", "This month", "This year"],
 };
-

@@ -2,21 +2,14 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import SearchBar from "./components/SearchBar";
 import Navigation from "./components/Navigation";
-import SideColumn from "./components/SideColumn";
 import Leaderboard from "./components/Leaderboard";
-import { leftSideTips, rightSideTips } from "./data/mockData";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-black bg-grid-pattern bg-gradient-radial">
-      <div className="mx-auto flex max-w-[1600px] justify-center gap-6 px-4 py-6">
-        {/* Left Column - Now starting from the top */}
-        <div className="pt-20">
-          <SideColumn tips={leftSideTips} position="left" />
-        </div>
-
+      <div className="mx-auto flex max-w-7xl justify-center px-4 py-6">
         {/* Center Content */}
-        <main className="flex w-full max-w-3xl flex-col items-center">
+        <main className="flex w-full flex-col items-center">
           <Hero />
           <SearchBar />
           <Navigation />
@@ -29,11 +22,6 @@ export default function Home() {
             </p>
           </footer>
         </main>
-
-        {/* Right Column - Now starting from the top */}
-        <div className="pt-20">
-          <SideColumn tips={rightSideTips} position="right" />
-        </div>
       </div>
     </div>
   );
