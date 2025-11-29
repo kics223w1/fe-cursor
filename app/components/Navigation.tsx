@@ -1,4 +1,4 @@
-import { navItems } from "../data/mockData";
+const navItems = ["Models", "Plans", "Modes", "Countries"];
 
 export default function Navigation() {
   return (
@@ -19,4 +19,3 @@ export default function Navigation() {
     </nav>
   );
 }
-

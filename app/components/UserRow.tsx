@@ -1,4 +1,4 @@
-import { Submission } from "../data/mockData";
+import { Submission } from "../types";
 
 interface UserRowProps {
   submission: Submission;
