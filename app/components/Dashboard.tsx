@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { Card } from './ui/Card';
 import Leaderboard from './Leaderboard';
+import { useCachedFetch } from '../lib/cache';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,7 +17,7 @@ import {
   ArcElement,
   RadialLinearScale,
 } from 'chart.js';
-import { Line, Bar, Doughnut, Radar } from 'react-chartjs-2';
+import { Line, Doughnut } from 'react-chartjs-2';
 
 // Register ChartJS components
 ChartJS.register(
@@ -61,25 +62,17 @@ interface StatsData {
 }
 
 export default function Dashboard() {
-  const [data, setData] = useState<StatsData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    fetch('/api/stats/overview')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch');
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-      });
+  const fetchStats = useCallback(async () => {
+    const res = await fetch('/api/stats/overview');
+    if (!res.ok) throw new Error('Failed to fetch');
+    return res.json() as Promise<StatsData>;
   }, []);
+
+  const { data, loading, error } = useCachedFetch<StatsData>(
+    'stats-overview',
+    fetchStats,
+    { ttlMs: 5 * 60 * 1000 } // Cache for 5 minutes
+  );
 
   if (loading) {
     return (

@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { Button } from './ui/Button';
 import { MODEL_OPTIONS, PLAN_OPTIONS, COUNTRY_OPTIONS } from '../types';
+import { useCache } from '../lib/cache';
 
 export default function ShareSetup({ onSucccess }: { onSucccess: () => void }) {
+  const cache = useCache();
   const [formData, setFormData] = useState({
     favoriteModel: '',
     cursorPlan: 'Pro',
@@ -30,6 +32,9 @@ export default function ShareSetup({ onSucccess }: { onSucccess: () => void }) {
       });
 
       if (!res.ok) throw new Error('Failed to submit');
+
+      // Invalidate cache so fresh data loads on return
+      cache.invalidateAll();
 
       setStatus('success');
       setTimeout(() => {
