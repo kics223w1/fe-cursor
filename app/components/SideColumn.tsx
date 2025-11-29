@@ -8,15 +8,10 @@ interface SideColumnProps {
 
 export default function SideColumn({ tips, position }: SideColumnProps) {
   return (
-    <aside
-      className={`hidden w-52 flex-col gap-3 xl:flex ${
-        position === "left" ? "items-end" : "items-start"
-      }`}
-    >
+    <aside className="hidden w-64 flex-col gap-4 lg:flex">
       {tips.map((tip) => (
         <SideCard key={tip.id} tip={tip} />
       ))}
     </aside>
   );
 }
-
